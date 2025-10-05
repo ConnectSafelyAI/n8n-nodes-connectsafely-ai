@@ -379,10 +379,14 @@ export class LinkedInPosts implements INodeType {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
+		// Get credentials once for all operations
+		const credentials = await this.getCredentials('connectSafelyApi');
+		const apiKey = credentials?.apiKey as string || '';
+
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
 				const operation = this.getNodeParameter('operation', itemIndex) as string;
-				const accountId = this.getNodeParameter('accountId', itemIndex) as string;
+				const accountId = operation !== 'scrapePost' ? this.getNodeParameter('accountId', itemIndex) as string : '';
 
 				let responseData: any;
 
@@ -403,7 +407,7 @@ export class LinkedInPosts implements INodeType {
 							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/posts/latest',
+								url: '/linkedin/posts/latest',
 								body,
 							},
 						);
@@ -422,7 +426,7 @@ export class LinkedInPosts implements INodeType {
 							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/posts/react',
+								url: '/linkedin/posts/react',
 								body,
 							},
 						);
@@ -441,7 +445,7 @@ export class LinkedInPosts implements INodeType {
 							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/posts/comment',
+								url: '/linkedin/posts/comment',
 								body,
 							},
 						);
@@ -467,7 +471,7 @@ export class LinkedInPosts implements INodeType {
 							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/posts/comments',
+								url: '/linkedin/posts/comments',
 								body,
 							},
 						);
@@ -487,7 +491,7 @@ export class LinkedInPosts implements INodeType {
 							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/posts/comments/all',
+								url: '/linkedin/posts/comments/all',
 								body,
 							},
 						);
@@ -509,7 +513,7 @@ export class LinkedInPosts implements INodeType {
 							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/posts/search',
+								url: '/linkedin/posts/search',
 								body,
 							},
 						);
@@ -519,14 +523,33 @@ export class LinkedInPosts implements INodeType {
 					case 'scrapePost': {
 						const postUrl = this.getNodeParameter('postUrl', itemIndex) as string;
 
+						if (!postUrl) {
+							throw new NodeOperationError(this.getNode(), 'Post URL is required');
+						}
+
+						if (!postUrl.includes('linkedin.com/posts/')) {
+							throw new NodeOperationError(this.getNode(), `Invalid LinkedIn post URL format. Received: "${postUrl}"`);
+						}
+
+						// Use direct HTTP request with manual authentication
+						const credentials = await this.getCredentials('connectSafelyApi');
+						const apiKey = credentials?.apiKey as string || '';
+						
 						responseData = await this.helpers.httpRequest.call(
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/api/linkedin/posts/scrape',
+								url: 'http://localhost:3005/linkedin/posts/scrape',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body: { postUrl },
+								json: true,
 							},
 						);
+						
 						break;
 					}
 
@@ -541,11 +564,24 @@ export class LinkedInPosts implements INodeType {
 			} catch (error) {
 				if (this.continueOnFail()) {
 					returnData.push({
-						json: { error: error.message },
+						json: { 
+							error: error.message,
+							statusCode: error.response?.status || error.statusCode || 'No status code',
+							apiError: error.response?.data || null,
+							details: error.description || 'No additional details available'
+						},
 						pairedItem: { item: itemIndex },
 					});
 				} else {
-					throw error;
+					// Improved error handling to show actual API errors
+					const statusCode = error.response?.status || error.statusCode || 'Unknown';
+					const apiMessage = error.response?.data?.message || error.response?.data?.error || error.message;
+					const fullError = error.response?.data ? JSON.stringify(error.response.data, null, 2) : error.message;
+					
+					throw new NodeOperationError(
+						this.getNode(), 
+						`LinkedIn Posts API Error (Status: ${statusCode}): ${apiMessage}\n\nFull error details: ${fullError}`
+					);
 				}
 			}
 		}

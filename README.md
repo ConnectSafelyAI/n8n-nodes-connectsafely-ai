@@ -41,7 +41,7 @@ A comprehensive N8N community node package for [ConnectSafely.ai](https://connec
 1. Sign up at [ConnectSafely.ai](https://connectsafely.ai)
 2. Navigate to your API settings
 3. Generate an API key
-4. Note your API base URL (usually `http://localhost:3005`)
+4. Note your API base URL (usually `https://api.connectsafely.ai`)
 
 ### 2. Configure Credentials in N8N
 

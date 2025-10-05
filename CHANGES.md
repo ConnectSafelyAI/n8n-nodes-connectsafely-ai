@@ -67,7 +67,7 @@ Updated the N8N package to align with the actual ConnectSafely API endpoints as 
 ### 🔧 Technical Details
 
 #### Base URL
-All nodes now use the correct base URL: `http://localhost:3005`
+All nodes now use the correct base URL: `https://api.connectsafely.ai`
 
 #### Authentication
 All nodes use the `connectSafelyApi` credential for authentication
