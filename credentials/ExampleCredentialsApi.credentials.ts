@@ -16,17 +16,11 @@ export class ExampleCredentialsApi implements ICredentialType {
 		// Properties can be defined exactly in the same way
 		// as node properties.
 		{
-			displayName: 'User Name',
-			name: 'username',
-			type: 'string',
-			default: '',
-		},
-		{
-			displayName: 'Password',
-			name: 'password',
+			displayName: 'apiKey',
+			name: 'apiKey',
 			type: 'string',
 			typeOptions: {
-				password: true,
+			 password: true,
 			},
 			default: '',
 		},

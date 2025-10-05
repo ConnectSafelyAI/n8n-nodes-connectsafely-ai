@@ -1,48 +1,202 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# ConnectSafely N8N Nodes
 
-# n8n-nodes-starter
+A comprehensive N8N community node package for [ConnectSafely.ai](https://connectsafely.ai) - the leading LinkedIn automation platform. This package provides powerful nodes to automate your LinkedIn engagement, boost posts, analyze performance, and grow your professional network.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+## 🚀 Features
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+### ConnectSafely Node
+- **Boost Posts**: Automatically boost LinkedIn posts for increased engagement
+- **Auto Comment**: Set up intelligent commenting on relevant posts
+- **Connection Management**: Send connection requests and manage your network
+- **Analytics**: Get detailed insights into your LinkedIn performance
+- **Targeting**: Creator and keyword-based targeting for precise engagement
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+### LinkedIn Automation Node
+- **Auto Like Posts**: Automatically like posts based on keywords, hashtags, or users
+- **Auto Share Posts**: Share posts with custom messages
+- **Follow/Unfollow Users**: Smart following based on industry, company, or job title
+- **Message Users**: Send personalized messages to connections
+- **User Search**: Find and analyze LinkedIn profiles
+- **Post Insights**: Get detailed performance metrics for posts
 
-## Prerequisites
+### ConnectSafely Analytics Node
+- **Campaign Performance**: Track detailed metrics for your campaigns
+- **Engagement Analytics**: Analyze likes, comments, shares, and connections
+- **Connection Analytics**: Monitor connection growth and quality
+- **Post Performance**: Get insights into individual post performance
+- **Audience Insights**: Understand your audience demographics and behavior
+- **Competitor Analysis**: Analyze competitor strategies and performance
+- **ROI Reports**: Calculate return on investment for your campaigns
+- **Data Export**: Export analytics in CSV, JSON, Excel, or PDF formats
 
-You need the following installed on your development machine:
+## 📦 Installation
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
-
-## Using this starter
-
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
-
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
+1. Install the package in your N8N instance:
+   ```bash
+   npm install n8n-nodes-connectsafely
    ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
 
-## More information
+2. Restart your N8N instance to load the new nodes.
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+3. Configure your ConnectSafely API credentials in N8N.
 
-## License
+## 🔧 Setup
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+### 1. Get ConnectSafely API Credentials
+
+1. Sign up at [ConnectSafely.ai](https://connectsafely.ai)
+2. Navigate to your API settings
+3. Generate an API key
+4. Note your API base URL (usually `https://api.connectsafely.ai`)
+
+### 2. Configure Credentials in N8N
+
+1. In N8N, go to **Credentials** → **Add Credential**
+2. Search for "ConnectSafely API"
+3. Enter your API key and base URL
+4. Test the connection
+
+## 📖 Usage Examples
+
+### Boost a LinkedIn Post
+
+```json
+{
+  "resource": "post",
+  "operation": "boost",
+  "postUrl": "https://www.linkedin.com/posts/your-post-url",
+  "boostDuration": 24,
+  "boostBudget": 10
+}
+```
+
+### Auto Comment on Posts
+
+```json
+{
+  "resource": "comment",
+  "operation": "autoComment",
+  "targetPostUrl": "https://www.linkedin.com/posts/target-post",
+  "commentText": "Great insights! Thanks for sharing."
+}
+```
+
+### Get Campaign Analytics
+
+```json
+{
+  "operation": "getCampaignPerformance",
+  "campaignId": "your-campaign-id",
+  "dateRange": "30d",
+  "includeSubCampaigns": true
+}
+```
+
+### Auto Like Posts by Keywords
+
+```json
+{
+  "operation": "autoLike",
+  "likeCriteria": "keywords",
+  "keywords": "marketing, automation, linkedin",
+  "maxLikesPerDay": 50
+}
+```
+
+## 🎯 Use Cases
+
+### For Recruiters
+- Automate connection requests to potential candidates
+- Auto-like and comment on relevant industry posts
+- Track engagement metrics for recruitment campaigns
+- Analyze candidate profiles and engagement patterns
+
+### For Personal Branding
+- Boost your best-performing posts
+- Automatically engage with industry leaders' content
+- Track your LinkedIn growth and engagement metrics
+- Export analytics for performance reports
+
+### For Marketing Teams
+- Automate social media engagement campaigns
+- Track ROI of LinkedIn marketing efforts
+- Analyze competitor strategies and performance
+- Generate detailed marketing reports
+
+### For Influencers
+- Automate engagement to grow your following
+- Track post performance and audience insights
+- Analyze what content resonates with your audience
+- Export data for brand partnership reports
+
+## 🔒 Safety Features
+
+ConnectSafely is designed with safety in mind:
+- **Rate Limiting**: Built-in limits to prevent account restrictions
+- **Natural Behavior**: Mimics human-like engagement patterns
+- **Quality Control**: Filters out low-quality connections and content
+- **Compliance**: Follows LinkedIn's terms of service
+
+## 📊 Analytics & Reporting
+
+The analytics nodes provide comprehensive insights:
+
+- **Real-time Metrics**: Track performance as it happens
+- **Historical Data**: Analyze trends over time
+- **Custom Date Ranges**: Get insights for any time period
+- **Export Options**: Download data in multiple formats
+- **ROI Tracking**: Calculate return on investment
+- **Competitor Analysis**: Benchmark against competitors
+
+## 🛠️ Advanced Configuration
+
+### Custom Targeting
+- **Keyword Targeting**: Target posts by specific keywords
+- **Creator Targeting**: Focus on specific LinkedIn users
+- **Industry Targeting**: Target users by industry
+- **Location Targeting**: Geographic targeting options
+- **Job Title Targeting**: Target specific roles and positions
+
+### Automation Rules
+- **Daily Limits**: Set maximum actions per day
+- **Time Windows**: Define when automation should run
+- **Quality Filters**: Only engage with high-quality content
+- **Blacklist Management**: Avoid specific users or content
+
+## 📚 API Documentation
+
+For detailed API documentation, visit [ConnectSafely.ai/docs](https://connectsafely.ai/docs)
+
+## 🤝 Support
+
+- **Documentation**: [ConnectSafely.ai/docs](https://connectsafely.ai/docs)
+- **Support**: [support@connectsafely.ai](mailto:support@connectsafely.ai)
+- **Community**: Join our Discord community
+- **GitHub Issues**: Report bugs and request features
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## 🙏 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+## 🔄 Changelog
+
+### v0.1.0
+- Initial release
+- ConnectSafely node with post boosting, commenting, and connection management
+- LinkedIn Automation node with auto-like, auto-share, and user management
+- ConnectSafely Analytics node with comprehensive reporting
+- Full API integration with ConnectSafely.ai platform
+
+## ⚠️ Disclaimer
+
+This package is designed to work with ConnectSafely.ai's official API. Please ensure you comply with LinkedIn's Terms of Service and use automation responsibly. ConnectSafely.ai provides safety features to help maintain account health, but users are responsible for their LinkedIn account compliance.
+
+---
+
+**Made with ❤️ by the ConnectSafely team**
+
+[ConnectSafely.ai](https://connectsafely.ai) | [Documentation](https://connectsafely.ai/docs) | [Support](mailto:support@connectsafely.ai)
