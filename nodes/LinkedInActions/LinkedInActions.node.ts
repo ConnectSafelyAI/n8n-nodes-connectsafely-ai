@@ -221,6 +221,10 @@ export class LinkedInActions implements INodeType {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
+		// Get credentials once for all operations
+		const credentials = await this.getCredentials('connectSafelyApi');
+		const apiKey = credentials?.apiKey as string || '';
+
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
 				const operation = this.getNodeParameter('operation', itemIndex) as string;
@@ -239,13 +243,18 @@ export class LinkedInActions implements INodeType {
 						if (profileId) body.profileId = profileId;
 						if (profileUrn) body.profileUrn = profileUrn;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/follow',
+								url: 'http://localhost:3005/linkedin/follow',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -265,13 +274,18 @@ export class LinkedInActions implements INodeType {
 						if (subject) body.subject = subject;
 						if (messageType) body.messageType = messageType;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/message',
+								url: 'http://localhost:3005/linkedin/message',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -288,13 +302,18 @@ export class LinkedInActions implements INodeType {
 						if (profileUrn) body.profileUrn = profileUrn;
 						if (customMessage) body.customMessage = customMessage;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/connect',
+								url: 'http://localhost:3005/linkedin/connect',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -303,17 +322,22 @@ export class LinkedInActions implements INodeType {
 					case 'checkRelationship': {
 						const profileId = this.getNodeParameter('profileId', itemIndex) as string;
 						
-						let url = `/api/linkedin/relationship/${profileId}`;
+						let url = `http://localhost:3005/linkedin/relationship/${profileId}`;
 						if (accountId) {
-							url = `/api/linkedin/relationship/${accountId}/${profileId}`;
+							url = `http://localhost:3005/linkedin/relationship/${accountId}/${profileId}`;
 						}
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'GET',
 								url,
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								json: true,
 							},
 						);
 						break;

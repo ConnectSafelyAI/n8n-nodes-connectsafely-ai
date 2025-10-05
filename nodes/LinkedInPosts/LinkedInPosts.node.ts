@@ -402,13 +402,18 @@ export class LinkedInPosts implements INodeType {
 						if (profileId) body.profileId = profileId;
 						if (profileUrn) body.profileUrn = profileUrn;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/linkedin/posts/latest',
+								url: 'http://localhost:3005/linkedin/posts/latest',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -421,13 +426,18 @@ export class LinkedInPosts implements INodeType {
 						const body: any = { postUrl, reactionType };
 						if (accountId) body.accountId = accountId;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/linkedin/posts/react',
+								url: 'http://localhost:3005/linkedin/posts/react',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -440,13 +450,18 @@ export class LinkedInPosts implements INodeType {
 						const body: any = { postUrl, comment };
 						if (accountId) body.accountId = accountId;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/linkedin/posts/comment',
+								url: 'http://localhost:3005/linkedin/posts/comment',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -466,13 +481,18 @@ export class LinkedInPosts implements INodeType {
 						if (start) body.start = start;
 						if (paginationToken) body.paginationToken = paginationToken;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/linkedin/posts/comments',
+								url: 'http://localhost:3005/linkedin/posts/comments',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -486,13 +506,18 @@ export class LinkedInPosts implements INodeType {
 						const body: any = { postUrl, maxComments, batchSize };
 						if (accountId) body.accountId = accountId;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/linkedin/posts/comments/all',
+								url: 'http://localhost:3005/linkedin/posts/comments/all',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -508,13 +533,18 @@ export class LinkedInPosts implements INodeType {
 						const body: any = { keywords, count: searchCount, start: searchStart, datePosted, sortBy };
 						if (accountId) body.accountId = accountId;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/linkedin/posts/search',
+								url: 'http://localhost:3005/linkedin/posts/search',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
@@ -530,10 +560,6 @@ export class LinkedInPosts implements INodeType {
 						if (!postUrl.includes('linkedin.com/posts/')) {
 							throw new NodeOperationError(this.getNode(), `Invalid LinkedIn post URL format. Received: "${postUrl}"`);
 						}
-
-						// Use direct HTTP request with manual authentication
-						const credentials = await this.getCredentials('connectSafelyApi');
-						const apiKey = credentials?.apiKey as string || '';
 						
 						responseData = await this.helpers.httpRequest.call(
 							this,

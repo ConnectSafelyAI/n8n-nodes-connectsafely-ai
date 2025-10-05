@@ -88,6 +88,10 @@ export class LinkedInProfiles implements INodeType {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
+		// Get credentials once for all operations
+		const credentials = await this.getCredentials('connectSafelyApi');
+		const apiKey = credentials?.apiKey as string || '';
+
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
 				const operation = this.getNodeParameter('operation', itemIndex) as string;
@@ -107,13 +111,18 @@ export class LinkedInProfiles implements INodeType {
 						};
 						if (accountId) body.accountId = accountId;
 
-						responseData = await this.helpers.httpRequestWithAuthentication.call(
+						responseData = await this.helpers.httpRequest.call(
 							this,
-							'connectSafelyApi',
 							{
 								method: 'POST',
-								url: '/api/linkedin/profile',
+								url: 'http://localhost:3005/linkedin/profile',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
 								body,
+								json: true,
 							},
 						);
 						break;
