@@ -22,13 +22,6 @@ export class ConnectSafelyApi implements ICredentialType {
 			description: 'Your ConnectSafely API key',
 			required: true,
 		},
-		{
-			displayName: 'Base URL',
-			name: 'baseUrl',
-			type: 'string',
-			default: 'https://api.connectsafely.ai',
-			description: 'ConnectSafely API base URL',
-		},
 	];
 
 	authenticate: IAuthenticateGeneric = {
@@ -43,8 +36,8 @@ export class ConnectSafelyApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: '={{ $credentials.baseUrl }}',
-			url: '/v1/auth/verify',
+			baseURL: 'http://localhost:3005',
+			url: '/health',
 			method: 'GET',
 		},
 	};

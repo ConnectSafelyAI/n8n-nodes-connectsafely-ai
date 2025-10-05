@@ -1,33 +1,27 @@
 # ConnectSafely N8N Nodes
 
-A comprehensive N8N community node package for [ConnectSafely.ai](https://connectsafely.ai) - the leading LinkedIn automation platform. This package provides powerful nodes to automate your LinkedIn engagement, boost posts, analyze performance, and grow your professional network.
+A comprehensive N8N community node package for [ConnectSafely.ai](https://connectsafely.ai) - the leading LinkedIn automation platform. This package provides powerful nodes to automate your LinkedIn engagement, manage posts, and grow your professional network.
 
 ## 🚀 Features
 
-### ConnectSafely Node
-- **Boost Posts**: Automatically boost LinkedIn posts for increased engagement
-- **Auto Comment**: Set up intelligent commenting on relevant posts
-- **Connection Management**: Send connection requests and manage your network
-- **Analytics**: Get detailed insights into your LinkedIn performance
-- **Targeting**: Creator and keyword-based targeting for precise engagement
+### LinkedIn Actions Node
+- **Follow/Unfollow Users**: Follow or unfollow LinkedIn users
+- **Send Messages**: Send direct messages to LinkedIn users
+- **Send Connection Requests**: Send connection requests with custom messages
+- **Check Relationship Status**: Check your relationship status with other users
 
-### LinkedIn Automation Node
-- **Auto Like Posts**: Automatically like posts based on keywords, hashtags, or users
-- **Auto Share Posts**: Share posts with custom messages
-- **Follow/Unfollow Users**: Smart following based on industry, company, or job title
-- **Message Users**: Send personalized messages to connections
-- **User Search**: Find and analyze LinkedIn profiles
-- **Post Insights**: Get detailed performance metrics for posts
+### LinkedIn Posts Node
+- **Get Latest Posts**: Fetch the latest posts from LinkedIn users
+- **React to Posts**: React to posts with various reaction types (Like, Praise, etc.)
+- **Comment on Posts**: Comment on LinkedIn posts
+- **Get Post Comments**: Retrieve comments from posts with pagination
+- **Search Posts**: Search for posts by keywords with filters
+- **Scrape Post Content**: Scrape public post content without authentication
 
-### ConnectSafely Analytics Node
-- **Campaign Performance**: Track detailed metrics for your campaigns
-- **Engagement Analytics**: Analyze likes, comments, shares, and connections
-- **Connection Analytics**: Monitor connection growth and quality
-- **Post Performance**: Get insights into individual post performance
-- **Audience Insights**: Understand your audience demographics and behavior
-- **Competitor Analysis**: Analyze competitor strategies and performance
-- **ROI Reports**: Calculate return on investment for your campaigns
-- **Data Export**: Export analytics in CSV, JSON, Excel, or PDF formats
+### LinkedIn Profiles Node
+- **Fetch Profile Information**: Get detailed profile information including experience, education, and contact details
+- **Include Geo Location**: Option to include geographical location data
+- **Include Contact Info**: Option to include contact information
 
 ## 📦 Installation
 
@@ -47,7 +41,7 @@ A comprehensive N8N community node package for [ConnectSafely.ai](https://connec
 1. Sign up at [ConnectSafely.ai](https://connectsafely.ai)
 2. Navigate to your API settings
 3. Generate an API key
-4. Note your API base URL (usually `https://api.connectsafely.ai`)
+4. Note your API base URL (usually `http://localhost:3005`)
 
 ### 2. Configure Credentials in N8N
 

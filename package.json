@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-connectsafely",
   "version": "0.1.0",
-  "description": "n8n community node for ConnectSafely LinkedIn automation platform - boost posts, auto-comment, analytics, and more",
+  "description": "n8n community node for ConnectSafely LinkedIn automation platform - follow users, send messages, manage posts, and fetch profiles",
   "keywords": [
     "n8n-community-node-package"
   ],
@@ -34,15 +34,13 @@
     "n8nNodesApiVersion": 1,
     "credentials": [
       "dist/credentials/ConnectSafelyApi.credentials.js",
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
       "dist/credentials/HttpBinApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ConnectSafely/ConnectSafely.node.js",
-      "dist/nodes/LinkedInAutomation/LinkedInAutomation.node.js",
-      "dist/nodes/ConnectSafelyAnalytics/ConnectSafelyAnalytics.node.js",
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/HttpBin/HttpBin.node.js",
+      "dist/nodes/LinkedInActions/LinkedInActions.node.js",
+      "dist/nodes/LinkedInPosts/LinkedInPosts.node.js",
+      "dist/nodes/LinkedInProfiles/LinkedInProfiles.node.js"
     ]
   },
   "devDependencies": {
