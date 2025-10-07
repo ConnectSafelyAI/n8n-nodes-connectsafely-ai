@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-connectsafely",
+  "name": "n8n-nodes-connectsafely-ai",
   "version": "0.1.0",
   "description": "n8n community node for ConnectSafely LinkedIn automation platform - follow users, send messages, manage posts, and fetch profiles",
   "keywords": [
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ConnectSafelyAI/N8N_Package_ConnectSafely"
+    "url": "https://github.com/ConnectSafelyAI/n8n-nodes-connectsafely-ai"
   },
   "engines": {
     "node": ">=20.15"
