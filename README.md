@@ -1,12 +1,20 @@
 # n8n-nodes-connectsafely-ai
+<div align="center">
+  <img src="screenshots/n8n-connect-connectsafely.png" alt="ConnectSafely in N8N" />
+</div>
+This is an n8n community node that allows you to interact with ConnectSafely.ai in your `n8n` workflows.
 
-This is an n8n community node. It lets you use ConnectSafely.ai in your n8n workflows.
+**ConnectSafely.ai** is a LinkedIn automation platform that provides safe and compliant tools for automating LinkedIn engagement, post management, and profile analysis. It offers powerful APIs for LinkedIn automation while maintaining account safety and compliance with LinkedIn's terms of service.
 
-ConnectSafely.ai is a LinkedIn automation platform that provides safe and compliant tools for automating LinkedIn engagement, post management, and profile analysis.
+If you've been trying to automate LinkedIn tasks like `social media engagement`, `lead generation`, `profile analysis`, or `content management` with `n8n` and want to avoid dealing with LinkedIn's complex API restrictions, the `n8n-nodes-connectsafely-ai` will make your life easier.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
+
+
 ![All ConnectSafely Nodes](screenshots/allnodes.png)
+
+## Table of Contents
 
 [Installation](#installation)  
 [Operations](#operations)  
@@ -14,142 +22,101 @@ ConnectSafely.ai is a LinkedIn automation platform that provides safe and compli
 [Compatibility](#compatibility)  
 [Usage](#usage)  
 [Resources](#resources)  
-[Version history](#version-history)  
+[Version history](#version-history)
+
+## Highlights
+
+* Full LinkedIn automation control
+* Safe and compliant operations
+* Profile analysis and lead generation
+* Post engagement and management
+* Connection request automation
+* Real-time relationship tracking
+* Advanced content scraping
+* Custom targeting options  
 
 ## Installation
 
-Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
+1. Sign up at [ConnectSafely.ai](https://connectsafely.ai) and get your API key
+2. Visit your n8n instance > Settings > Community Nodes > Install `n8n-nodes-connectsafely-ai`
+3. Set up ConnectSafely credentials with your API key
+4. Add any ConnectSafely node to your workflow by searching for `connectsafely`
+5. Start automating LinkedIn in your n8n workflows!
 
-```bash
-npm install n8n-nodes-connectsafely-ai
-```
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
 ## Operations
 
-### LinkedIn Actions Node
-![LinkedIn Actions Node](screenshots/linkedin-actions.png)
-
-**Available Actions**:
-- **Follow User**: Follow or unfollow LinkedIn users
-- **Send Message**: Send direct messages to LinkedIn users  
-- **Send Connection Request**: Send connection requests with custom messages
-- **Check Relationship**: Check your relationship status with other users
-
-### LinkedIn Posts Node
-![LinkedIn Posts Node](screenshots/linkedin-posts.png)
-
-**Available Actions**:
-- **Get Latest Posts**: Fetch the latest posts from LinkedIn users
-- **React to Post**: React to posts with various reaction types (Like, Praise, etc.)
-- **Comment on Post**: Comment on LinkedIn posts
-- **Get Post Comments**: Retrieve comments from posts with pagination
-- **Get All Post Comments**: Get all comments from a post (with pagination)
-- **Search Posts**: Search for posts by keywords with filters
-- **Scrape Post**: Scrape public post content without authentication
-
-### LinkedIn Profiles Node
-![LinkedIn Profiles Node](screenshots/linkedin-profiles.png)
-
-**Available Actions**:
-- **Fetch Profile**: Get detailed profile information including experience, education, and contact details
-
-**Features**:
-- **Include Geo Location**: Option to include geographical location data
-- **Include Contact Info**: Option to include contact information
-- **Profile Analysis**: Get comprehensive profile insights
+* Follow or unfollow LinkedIn users
+* Send direct messages to LinkedIn users
+* Send connection requests with custom messages
+* Check relationship status with other users
+* Get latest posts from LinkedIn users
+* React to posts with various reaction types
+* Comment on LinkedIn posts
+* Retrieve comments from posts with pagination
+* Search for posts by keywords with filters
+* Scrape public post content without authentication
+* Fetch detailed profile information
+* Analyze profiles with geo location and contact data
 
 ## Credentials
 
-To use this node, you need to authenticate with ConnectSafely.ai:
+This node requires a ConnectSafely.ai `API key` to connect to your ConnectSafely account.
 
-1. Sign up at [ConnectSafely.ai](https://connectsafely.ai)
-2. Navigate to your API settings
-3. Generate an API key
-4. In n8n, go to **Credentials** → **Add Credential**
-5. Search for "ConnectSafely API"
-6. Enter your API key
-7. Test the connection
+<div align="center">
+  <img src="screenshots/add-cred.png" alt="ConnectSafely in N8N" />
+</div>
 
 ## Compatibility
 
-- **Minimum n8n version**: 1.0.0
-- **Tested with n8n versions**: 1.0.0+
-- **Node.js version**: >=20.15
+This node was developed on `n8n@1.0.0`. It hasn't been tested on other versions yet.
 
 ## Usage
 
-### Quick Start
+1. Add any ConnectSafely node to your workflow.
+2. Configure your node.
 
-1. **Add a Node**: Drag any ConnectSafely node from the node panel into your workflow
-2. **Configure Credentials**: Select or create your ConnectSafely API credentials
-3. **Choose Operation**: Select the action you want to perform from the dropdown
-4. **Set Parameters**: Configure the required parameters for your selected operation
-5. **Execute**: Run your workflow to automate LinkedIn actions
+![LinkedIn Actions Node](screenshots/linkedin-actions.png)
 
-### All Available Actions Summary
+![LinkedIn Posts Node](screenshots/linkedin-posts.png)
 
-**LinkedIn Actions Node**:
-- Follow User
-- Send Message  
-- Send Connection Request
-- Check Relationship
+![LinkedIn Profiles Node](screenshots/linkedin-profiles.png)
 
-**LinkedIn Posts Node**:
-- Get Latest Posts
-- React to Post
-- Comment on Post
-- Get Post Comments
-- Get All Post Comments
-- Search Posts
-- Scrape Post
+## Anti-Bot Detection
 
-**LinkedIn Profiles Node**:
-- Fetch Profile
+With strong support from ConnectSafely.ai, you can implement robust anti-bot detection using the following features:
 
-### Use Cases
-
-**For Recruiters**:
-- Automate connection requests to potential candidates
-- Auto-like and comment on relevant industry posts
-- Analyze candidate profiles and engagement patterns
-- Track relationship status with prospects
-
-**For Personal Branding**:
-- Automatically engage with industry leaders' content
-- Monitor and respond to comments on your posts
-- Track engagement metrics and post performance
-- Build meaningful professional relationships
-
-**For Marketing Teams**:
-- Automate social media engagement campaigns
-- Scrape and analyze competitor content
-- Generate leads through profile analysis
-- Track engagement metrics for campaigns
-
-**For Sales Teams**:
-- Automate prospecting and lead generation
-- Send personalized connection requests
-- Analyze prospect profiles for better targeting
-- Track relationship building progress
+* **Rate Limiting**: Built-in limits to prevent account restrictions
+* **Natural Behavior**: Mimics human-like engagement patterns
+* **Quality Control**: Filters out low-quality connections and content
+* **Compliance**: Follows LinkedIn's terms of service
 
 ## Resources
 
-* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* [ConnectSafely.ai Documentation](https://connectsafely.ai/docs)
-* [ConnectSafely.ai Platform](https://connectsafely.ai)
-* [Support](mailto:support@connectsafely.ai)
+* [n8n Community Nodes Documentation](https://docs.n8n.io/integrations/#community-nodes)
+* [ConnectSafely.ai Homepage](https://connectsafely.ai)
+* [ConnectSafely.ai API Documentation](https://connectsafely.ai/n8n-docs)
+* [ConnectSafely.ai Support](mailto:support@connectsafely.ai)
 
-## Version history
+## Version History
 
-### v0.1.0
-- Initial release
-- LinkedIn Actions node with follow, message, and connection management
-- LinkedIn Posts node with engagement, commenting, and scraping
-- LinkedIn Profiles node with profile fetching and analysis
-- Full API integration with ConnectSafely.ai platform
+* `0.1.0` Initial release
+* `0.1.0` LinkedIn Actions node with follow, message, and connection management
+* `0.1.0` LinkedIn Posts node with engagement, commenting, and scraping
+* `0.1.0` LinkedIn Profiles node with profile fetching and analysis
+* `0.1.0` Full API integration with ConnectSafely.ai platform
+
+## About
+
+n8n node to interact with ConnectSafely.ai instance
+
+### Topics
+
+linkedin-automation  social-media-automation  connectsafely  n8n  n8n-nodes  n8n-community-node-package  lead-generation  profile-analysis
 
 ---
 
 **Made with ❤️ by the ConnectSafely team**
 
-[ConnectSafely.ai](https://connectsafely.ai) | [Documentation](https://connectsafely.ai/docs) | [Support](mailto:support@connectsafely.ai)
+[ConnectSafely.ai](https://connectsafely.ai) | [Documentation](https://connectsafely.ai/n8n-docs) | [YouTube](https://www.youtube.com/@ConnectSafelyAI-v2x) | [Support](mailto:support@connectsafely.ai)
