@@ -27,7 +27,7 @@ export class LinkedInActions implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'http://localhost:3005',
+			baseURL: 'https://api.connectsafely.ai',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -247,7 +247,7 @@ export class LinkedInActions implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/follow',
+								url: 'https://api.connectsafely.ai/linkedin/follow',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -278,7 +278,7 @@ export class LinkedInActions implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/message',
+								url: 'https://api.connectsafely.ai/linkedin/message',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -306,7 +306,7 @@ export class LinkedInActions implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/connect',
+								url: 'https://api.connectsafely.ai/linkedin/connect',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -322,9 +322,9 @@ export class LinkedInActions implements INodeType {
 					case 'checkRelationship': {
 						const profileId = this.getNodeParameter('profileId', itemIndex) as string;
 						
-						let url = `http://localhost:3005/linkedin/relationship/${profileId}`;
+						let url = `https://api.connectsafely.ai/linkedin/relationship/${profileId}`;
 						if (accountId) {
-							url = `http://localhost:3005/linkedin/relationship/${accountId}/${profileId}`;
+							url = `https://api.connectsafely.ai/linkedin/relationship/${accountId}/${profileId}`;
 						}
 
 						responseData = await this.helpers.httpRequest.call(

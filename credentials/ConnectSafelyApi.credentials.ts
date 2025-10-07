@@ -36,7 +36,7 @@ export class ConnectSafelyApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'http://localhost:3005',
+			baseURL: 'https://api.connectsafely.ai',
 			url: '/health',
 			method: 'GET',
 		},

@@ -37,7 +37,6 @@
       "dist/credentials/HttpBinApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/HttpBin/HttpBin.node.js",
       "dist/nodes/LinkedInActions/LinkedInActions.node.js",
       "dist/nodes/LinkedInPosts/LinkedInPosts.node.js",
       "dist/nodes/LinkedInProfiles/LinkedInProfiles.node.js"

@@ -27,7 +27,7 @@ export class LinkedInProfiles implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'http://localhost:3005',
+			baseURL: 'https://api.connectsafely.ai',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export class LinkedInProfiles implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/profile',
+								url: 'https://api.connectsafely.ai/linkedin/profile',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',

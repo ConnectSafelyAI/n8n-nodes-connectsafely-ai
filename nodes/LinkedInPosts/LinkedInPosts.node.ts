@@ -27,7 +27,7 @@ export class LinkedInPosts implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'http://localhost:3005',
+			baseURL: 'https://api.connectsafely.ai',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -406,7 +406,7 @@ export class LinkedInPosts implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/posts/latest',
+								url: 'https://api.connectsafely.ai/linkedin/posts/latest',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -430,7 +430,7 @@ export class LinkedInPosts implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/posts/react',
+								url: 'https://api.connectsafely.ai/linkedin/posts/react',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -454,7 +454,7 @@ export class LinkedInPosts implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/posts/comment',
+								url: 'https://api.connectsafely.ai/linkedin/posts/comment',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -485,7 +485,7 @@ export class LinkedInPosts implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/posts/comments',
+								url: 'https://api.connectsafely.ai/linkedin/posts/comments',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -510,7 +510,7 @@ export class LinkedInPosts implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/posts/comments/all',
+								url: 'https://api.connectsafely.ai/linkedin/posts/comments/all',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -537,7 +537,7 @@ export class LinkedInPosts implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/posts/search',
+								url: 'https://api.connectsafely.ai/linkedin/posts/search',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
@@ -565,7 +565,7 @@ export class LinkedInPosts implements INodeType {
 							this,
 							{
 								method: 'POST',
-								url: 'http://localhost:3005/linkedin/posts/scrape',
+								url: 'https://api.connectsafely.ai/linkedin/posts/scrape',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
