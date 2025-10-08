@@ -40,37 +40,29 @@ export class ConnectSafelyLinkedIn implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					// LinkedIn Actions Operations
-					{
-						name: 'Follow User',
-						value: 'followUser',
-						description: 'Follow or unfollow a LinkedIn user',
-						action: 'Follow a user',
-					},
-					{
-						name: 'Send Message',
-						value: 'sendMessage',
-						description: 'Send a message to a LinkedIn user',
-						action: 'Send a message',
-					},
-					{
-						name: 'Send Connection Request',
-						value: 'sendConnectionRequest',
-						description: 'Send a connection request to a LinkedIn user',
-						action: 'Send connection request',
-					},
 					{
 						name: 'Check Relationship Status',
 						value: 'checkRelationship',
 						description: 'Check relationship status with a LinkedIn user',
 						action: 'Check relationship status',
 					},
-					// LinkedIn Posts Operations
 					{
 						name: 'Comment on Post',
 						value: 'commentOnPost',
 						description: 'Comment on a LinkedIn post',
 						action: 'Comment on a post',
+					},
+					{
+						name: 'Fetch Profile',
+						value: 'fetchProfile',
+						description: 'Fetch detailed information about a LinkedIn profile',
+						action: 'Fetch profile information',
+					},
+					{
+						name: 'Follow User',
+						value: 'followUser',
+						description: 'Follow or unfollow a LinkedIn user',
+						action: 'Follow a user',
 					},
 					{
 						name: 'Get All Post Comments',
@@ -108,12 +100,17 @@ export class ConnectSafelyLinkedIn implements INodeType {
 						description: 'Search for LinkedIn posts by keywords',
 						action: 'Search posts',
 					},
-					// LinkedIn Profiles Operations
 					{
-						name: 'Fetch Profile',
-						value: 'fetchProfile',
-						description: 'Fetch detailed information about a LinkedIn profile',
-						action: 'Fetch profile information',
+						name: 'Send Connection Request',
+						value: 'sendConnectionRequest',
+						description: 'Send a connection request to a LinkedIn user',
+						action: 'Send connection request',
+					},
+					{
+						name: 'Send Message',
+						value: 'sendMessage',
+						description: 'Send a message to a LinkedIn user',
+						action: 'Send a message',
 					},
 				],
 				default: 'getLatestPosts',

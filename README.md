@@ -95,6 +95,7 @@ The node dynamically shows only the relevant parameters based on your selected o
 - **Posts Operations**: Set up post URLs, reactions, comments, and search criteria  
 - **Profile Operations**: Specify profile IDs and data inclusion options
 
+![ConnectSafely LinkedIn Node Interface](screenshots/allnodes.png)
 
 ## Anti-Bot Detection
 
