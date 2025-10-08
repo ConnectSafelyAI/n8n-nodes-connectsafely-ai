@@ -6,17 +6,17 @@ import type {
 } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 
-export class LinkedInPosts implements INodeType {
+export class ConnectSafelyLinkedIn implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'LinkedIn Posts',
-		name: 'linkedInPosts',
+		displayName: 'ConnectSafely LinkedIn',
+		name: 'connectSafelyLinkedIn',
 		icon: 'file:linkedin.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
-		description: 'Interact with LinkedIn posts - get latest posts, react, comment, and more',
+		description: 'Comprehensive LinkedIn automation - actions, posts, and profiles',
 		defaults: {
-			name: 'LinkedIn Posts',
+			name: 'ConnectSafely LinkedIn',
 		},
 		inputs: ['main'],
 		outputs: ['main'],
@@ -40,6 +40,32 @@ export class LinkedInPosts implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
+					// LinkedIn Actions Operations
+					{
+						name: 'Follow User',
+						value: 'followUser',
+						description: 'Follow or unfollow a LinkedIn user',
+						action: 'Follow a user',
+					},
+					{
+						name: 'Send Message',
+						value: 'sendMessage',
+						description: 'Send a message to a LinkedIn user',
+						action: 'Send a message',
+					},
+					{
+						name: 'Send Connection Request',
+						value: 'sendConnectionRequest',
+						description: 'Send a connection request to a LinkedIn user',
+						action: 'Send connection request',
+					},
+					{
+						name: 'Check Relationship Status',
+						value: 'checkRelationship',
+						description: 'Check relationship status with a LinkedIn user',
+						action: 'Check relationship status',
+					},
+					// LinkedIn Posts Operations
 					{
 						name: 'Comment on Post',
 						value: 'commentOnPost',
@@ -82,30 +108,37 @@ export class LinkedInPosts implements INodeType {
 						description: 'Search for LinkedIn posts by keywords',
 						action: 'Search posts',
 					},
+					// LinkedIn Profiles Operations
+					{
+						name: 'Fetch Profile',
+						value: 'fetchProfile',
+						description: 'Fetch detailed information about a LinkedIn profile',
+						action: 'Fetch profile information',
+					},
 				],
 				default: 'getLatestPosts',
 			},
-			// Account ID (optional for most operations)
+			// Account ID (optional for all operations except scrapePost)
 			{
 				displayName: 'Account ID',
 				name: 'accountId',
 				type: 'string',
 				displayOptions: {
 					show: {
-						operation: ['getLatestPosts', 'reactToPost', 'commentOnPost', 'getPostComments', 'getAllPostComments', 'searchPosts'],
+						operation: ['followUser', 'sendMessage', 'sendConnectionRequest', 'checkRelationship', 'getLatestPosts', 'reactToPost', 'commentOnPost', 'getPostComments', 'getAllPostComments', 'searchPosts', 'fetchProfile'],
 					},
 				},
 				default: '',
 				description: 'LinkedIn account ID (uses default if not provided)',
 			},
-			// Get Latest Posts Parameters
+			// Follow User Parameters
 			{
 				displayName: 'Profile ID',
 				name: 'profileId',
 				type: 'string',
 				displayOptions: {
 					show: {
-						operation: ['getLatestPosts'],
+						operation: ['followUser', 'sendConnectionRequest', 'checkRelationship', 'getLatestPosts', 'fetchProfile'],
 					},
 				},
 				default: '',
@@ -117,12 +150,127 @@ export class LinkedInPosts implements INodeType {
 				type: 'string',
 				displayOptions: {
 					show: {
-						operation: ['getLatestPosts'],
+						operation: ['followUser', 'sendConnectionRequest', 'getLatestPosts'],
 					},
 				},
 				default: '',
 				description: 'LinkedIn profile URN (alternative to profileId)',
 			},
+			{
+				displayName: 'Action',
+				name: 'action',
+				type: 'options',
+				displayOptions: {
+					show: {
+						operation: ['followUser'],
+					},
+				},
+				options: [
+					{
+						name: 'Follow',
+						value: 'follow',
+					},
+					{
+						name: 'Unfollow',
+						value: 'unfollow',
+					},
+				],
+				default: 'follow',
+			},
+			// Send Message Parameters
+			{
+				displayName: 'Recipient Profile ID',
+				name: 'recipientProfileId',
+				type: 'string',
+				displayOptions: {
+					show: {
+						operation: ['sendMessage'],
+					},
+				},
+				default: '',
+				description: 'Recipient\'s LinkedIn profile ID',
+				required: true,
+			},
+			{
+				displayName: 'Recipient Profile URN',
+				name: 'recipientProfileUrn',
+				type: 'string',
+				displayOptions: {
+					show: {
+						operation: ['sendMessage'],
+					},
+				},
+				default: '',
+				description: 'Recipient\'s LinkedIn profile URN',
+			},
+			{
+				displayName: 'Message',
+				name: 'message',
+				type: 'string',
+				typeOptions: {
+					rows: 3,
+				},
+				displayOptions: {
+					show: {
+						operation: ['sendMessage'],
+					},
+				},
+				default: '',
+				placeholder: 'Hello! I would like to connect with you.',
+				description: 'Message content',
+				required: true,
+			},
+			{
+				displayName: 'Subject',
+				name: 'subject',
+				type: 'string',
+				displayOptions: {
+					show: {
+						operation: ['sendMessage'],
+					},
+				},
+				default: '',
+				description: 'Message subject',
+			},
+			{
+				displayName: 'Message Type',
+				name: 'messageType',
+				type: 'options',
+				displayOptions: {
+					show: {
+						operation: ['sendMessage'],
+					},
+				},
+				options: [
+					{
+						name: 'Normal',
+						value: 'normal',
+					},
+					{
+						name: 'InMail',
+						value: 'inmail',
+					},
+				],
+				default: 'normal',
+			},
+			// Connection Request Parameters
+			{
+				displayName: 'Custom Message',
+				name: 'customMessage',
+				type: 'string',
+				typeOptions: {
+					rows: 3,
+				},
+				displayOptions: {
+					show: {
+						operation: ['sendConnectionRequest'],
+					},
+				},
+				default: '',
+				placeholder: 'Hi! I would like to connect with you.',
+				description: 'Custom connection message',
+			},
+			// Get Latest Posts Parameters
 			{
 				displayName: 'Count',
 				name: 'count',
@@ -372,6 +520,31 @@ export class LinkedInPosts implements INodeType {
 				default: 'relevance',
 				description: 'Sort order',
 			},
+			// Profile Parameters
+			{
+				displayName: 'Include Geo Location',
+				name: 'includeGeoLocation',
+				type: 'boolean',
+				displayOptions: {
+					show: {
+						operation: ['fetchProfile'],
+					},
+				},
+				default: false,
+				description: 'Whether to include geographical location data (default: false)',
+			},
+			{
+				displayName: 'Include Contact',
+				name: 'includeContact',
+				type: 'boolean',
+				displayOptions: {
+					show: {
+						operation: ['fetchProfile'],
+					},
+				},
+				default: false,
+				description: 'Whether to include contact information (default: false)',
+			},
 		],
 	};
 
@@ -391,6 +564,118 @@ export class LinkedInPosts implements INodeType {
 				let responseData: any;
 
 				switch (operation) {
+					// LinkedIn Actions Operations
+					case 'followUser': {
+						const profileId = this.getNodeParameter('profileId', itemIndex) as string;
+						const profileUrn = this.getNodeParameter('profileUrn', itemIndex) as string;
+						const action = this.getNodeParameter('action', itemIndex) as string;
+
+						const body: any = { action };
+						if (accountId) body.accountId = accountId;
+						if (profileId) body.profileId = profileId;
+						if (profileUrn) body.profileUrn = profileUrn;
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'POST',
+								url: 'https://api.connectsafely.ai/linkedin/follow',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								body,
+								json: true,
+							},
+						);
+						break;
+					}
+
+					case 'sendMessage': {
+						const recipientProfileId = this.getNodeParameter('recipientProfileId', itemIndex) as string;
+						const recipientProfileUrn = this.getNodeParameter('recipientProfileUrn', itemIndex) as string;
+						const message = this.getNodeParameter('message', itemIndex) as string;
+						const subject = this.getNodeParameter('subject', itemIndex) as string;
+						const messageType = this.getNodeParameter('messageType', itemIndex) as string;
+
+						const body: any = { message };
+						if (accountId) body.accountId = accountId;
+						if (recipientProfileId) body.recipientProfileId = recipientProfileId;
+						if (recipientProfileUrn) body.recipientProfileUrn = recipientProfileUrn;
+						if (subject) body.subject = subject;
+						if (messageType) body.messageType = messageType;
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'POST',
+								url: 'https://api.connectsafely.ai/linkedin/message',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								body,
+								json: true,
+							},
+						);
+						break;
+					}
+
+					case 'sendConnectionRequest': {
+						const profileId = this.getNodeParameter('profileId', itemIndex) as string;
+						const profileUrn = this.getNodeParameter('profileUrn', itemIndex) as string;
+						const customMessage = this.getNodeParameter('customMessage', itemIndex) as string;
+
+						const body: any = {};
+						if (accountId) body.accountId = accountId;
+						if (profileId) body.profileId = profileId;
+						if (profileUrn) body.profileUrn = profileUrn;
+						if (customMessage) body.customMessage = customMessage;
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'POST',
+								url: 'https://api.connectsafely.ai/linkedin/connect',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								body,
+								json: true,
+							},
+						);
+						break;
+					}
+
+					case 'checkRelationship': {
+						const profileId = this.getNodeParameter('profileId', itemIndex) as string;
+						
+						let url = `https://api.connectsafely.ai/linkedin/relationship/${profileId}`;
+						if (accountId) {
+							url = `https://api.connectsafely.ai/linkedin/relationship/${accountId}/${profileId}`;
+						}
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'GET',
+								url,
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								json: true,
+							},
+						);
+						break;
+					}
+
+					// LinkedIn Posts Operations
 					case 'getLatestPosts': {
 						const profileId = this.getNodeParameter('profileId', itemIndex) as string;
 						const profileUrn = this.getNodeParameter('profileUrn', itemIndex) as string;
@@ -579,6 +864,36 @@ export class LinkedInPosts implements INodeType {
 						break;
 					}
 
+					// LinkedIn Profiles Operations
+					case 'fetchProfile': {
+						const profileId = this.getNodeParameter('profileId', itemIndex) as string;
+						const includeGeoLocation = this.getNodeParameter('includeGeoLocation', itemIndex) as boolean;
+						const includeContact = this.getNodeParameter('includeContact', itemIndex) as boolean;
+
+						const body: any = { 
+							profileId, 
+							includeGeoLocation, 
+							includeContact 
+						};
+						if (accountId) body.accountId = accountId;
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'POST',
+								url: 'https://api.connectsafely.ai/linkedin/profile',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								body,
+								json: true,
+							},
+						);
+						break;
+					}
+
 					default:
 						throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
 				}
@@ -606,7 +921,7 @@ export class LinkedInPosts implements INodeType {
 					
 					throw new NodeOperationError(
 						this.getNode(), 
-						`LinkedIn Posts API Error (Status: ${statusCode}): ${apiMessage}\n\nFull error details: ${fullError}`
+						`ConnectSafely LinkedIn API Error (Status: ${statusCode}): ${apiMessage}\n\nFull error details: ${fullError}`
 					);
 				}
 			}

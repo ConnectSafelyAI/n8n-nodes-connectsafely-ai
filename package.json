@@ -37,9 +37,7 @@
       "dist/credentials/HttpBinApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/LinkedInActions/LinkedInActions.node.js",
-      "dist/nodes/LinkedInPosts/LinkedInPosts.node.js",
-      "dist/nodes/LinkedInProfiles/LinkedInProfiles.node.js"
+      "dist/nodes/ConnectSafelyLinkedIn/ConnectSafelyLinkedIn.node.js"
     ]
   },
   "devDependencies": {
