@@ -14,7 +14,7 @@ export class ConnectSafelyLinkedIn implements INodeType {
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
-		description: 'Comprehensive LinkedIn automation - actions, posts, and profiles',
+		description: 'Comprehensive LinkedIn automation - actions, posts, profiles, organizations, and groups',
 		defaults: {
 			name: 'ConnectSafely LinkedIn',
 		},
@@ -71,10 +71,28 @@ export class ConnectSafelyLinkedIn implements INodeType {
 						action: 'Get all post comments',
 					},
 					{
+						name: 'Get Group Members',
+						value: 'getGroupMembers',
+						description: 'Fetch members of a LinkedIn group by group ID',
+						action: 'Get group members',
+					},
+					{
+						name: 'Get Group Members by URL',
+						value: 'getGroupMembersByUrl',
+						description: 'Fetch members of a LinkedIn group using the group URL',
+						action: 'Get group members by URL',
+					},
+					{
 						name: 'Get Latest Posts',
 						value: 'getLatestPosts',
 						description: 'Get the latest posts from a LinkedIn user',
 						action: 'Get latest posts',
+					},
+					{
+						name: 'Get Organizations',
+						value: 'getOrganizations',
+						description: 'Get all LinkedIn organizations/company pages that the user manages',
+						action: 'Get organizations',
 					},
 					{
 						name: 'Get Post Comments',
@@ -122,7 +140,7 @@ export class ConnectSafelyLinkedIn implements INodeType {
 				type: 'string',
 				displayOptions: {
 					show: {
-						operation: ['followUser', 'sendMessage', 'sendConnectionRequest', 'checkRelationship', 'getLatestPosts', 'reactToPost', 'commentOnPost', 'getPostComments', 'getAllPostComments', 'searchPosts', 'fetchProfile'],
+						operation: ['followUser', 'sendMessage', 'sendConnectionRequest', 'checkRelationship', 'getLatestPosts', 'reactToPost', 'commentOnPost', 'getPostComments', 'getAllPostComments', 'searchPosts', 'fetchProfile', 'getOrganizations', 'getGroupMembers', 'getGroupMembersByUrl'],
 					},
 				},
 				default: '',
@@ -362,6 +380,31 @@ export class ConnectSafelyLinkedIn implements INodeType {
 				description: 'Comment text',
 				required: true,
 			},
+			{
+				displayName: 'Tag Post Author',
+				name: 'tagPostAuthor',
+				type: 'boolean',
+				displayOptions: {
+					show: {
+						operation: ['commentOnPost'],
+					},
+				},
+				default: false,
+				description: 'Whether to tag/mention the post author at the beginning of the comment (default: false)',
+			},
+			{
+				displayName: 'Company URN',
+				name: 'companyUrn',
+				type: 'string',
+				displayOptions: {
+					show: {
+						operation: ['commentOnPost'],
+					},
+				},
+				default: '',
+				placeholder: 'urn:li:fsd_company:102246628',
+				description: 'Company/organization URN to comment as a company page instead of personal account (optional)',
+			},
 			// Get Post Comments Parameters
 			{
 				displayName: 'Comment Count',
@@ -450,8 +493,8 @@ export class ConnectSafelyLinkedIn implements INodeType {
 						operation: ['searchPosts'],
 					},
 				},
-				default: 10,
-				description: 'Number of posts to return (1-50, default: 10)',
+				default: 50,
+				description: 'Number of posts to return (1-500, default: 50)',
 			},
 			{
 				displayName: 'Start Position',
@@ -517,6 +560,22 @@ export class ConnectSafelyLinkedIn implements INodeType {
 				default: 'relevance',
 				description: 'Sort order',
 			},
+			{
+				displayName: 'Author Job Titles',
+				name: 'authorJobTitles',
+				type: 'string',
+				typeOptions: {
+					multipleValues: true,
+				},
+				displayOptions: {
+					show: {
+						operation: ['searchPosts'],
+					},
+				},
+				default: [],
+				placeholder: 'e.g. CEO',
+				description: 'Array of job titles to filter posts by author\'s job title (max 5 titles). Examples: CEO, CTO, Founder, Director, VP.',
+			},
 			// Profile Parameters
 			{
 				displayName: 'Include Geo Location',
@@ -541,6 +600,96 @@ export class ConnectSafelyLinkedIn implements INodeType {
 				},
 				default: false,
 				description: 'Whether to include contact information (default: false)',
+			},
+			// LinkedIn Groups Parameters
+			{
+				displayName: 'Group ID',
+				name: 'groupId',
+				type: 'string',
+				displayOptions: {
+					show: {
+						operation: ['getGroupMembers'],
+					},
+				},
+				default: '',
+				description: 'LinkedIn group ID',
+				required: true,
+			},
+			{
+				displayName: 'Group URL',
+				name: 'groupUrl',
+				type: 'string',
+				displayOptions: {
+					show: {
+						operation: ['getGroupMembersByUrl'],
+					},
+				},
+				default: '',
+				placeholder: 'https://www.linkedin.com/groups/9357376/',
+				description: 'Full LinkedIn group URL',
+				required: true,
+			},
+			{
+				displayName: 'Count',
+				name: 'groupCount',
+				type: 'number',
+				displayOptions: {
+					show: {
+						operation: ['getGroupMembers', 'getGroupMembersByUrl'],
+					},
+				},
+				default: 50,
+				description: 'Number of members to fetch (1-100, default: 50)',
+			},
+			{
+				displayName: 'Start Position',
+				name: 'groupStart',
+				type: 'number',
+				displayOptions: {
+					show: {
+						operation: ['getGroupMembers', 'getGroupMembersByUrl'],
+					},
+				},
+				default: 0,
+				description: 'Starting index for pagination (default: 0)',
+			},
+			{
+				displayName: 'Membership Statuses',
+				name: 'membershipStatuses',
+				type: 'multiOptions',
+				displayOptions: {
+					show: {
+						operation: ['getGroupMembers', 'getGroupMembersByUrl'],
+					},
+				},
+				options: [
+					{
+						name: 'Owner',
+						value: 'OWNER',
+					},
+					{
+						name: 'Manager',
+						value: 'MANAGER',
+					},
+					{
+						name: 'Member',
+						value: 'MEMBER',
+					},
+				],
+				default: ['OWNER', 'MANAGER', 'MEMBER'],
+				description: 'Filter by membership status',
+			},
+			{
+				displayName: 'Search Query',
+				name: 'typeaheadQuery',
+				type: 'string',
+				displayOptions: {
+					show: {
+						operation: ['getGroupMembers', 'getGroupMembersByUrl'],
+					},
+				},
+				default: '',
+				description: 'Search query for member names',
 			},
 		],
 	};
@@ -728,9 +877,13 @@ export class ConnectSafelyLinkedIn implements INodeType {
 					case 'commentOnPost': {
 						const postUrl = this.getNodeParameter('postUrl', itemIndex) as string;
 						const comment = this.getNodeParameter('comment', itemIndex) as string;
+						const tagPostAuthor = this.getNodeParameter('tagPostAuthor', itemIndex) as boolean;
+						const companyUrn = this.getNodeParameter('companyUrn', itemIndex) as string;
 
 						const body: any = { postUrl, comment };
 						if (accountId) body.accountId = accountId;
+						if (tagPostAuthor !== undefined) body.tagPostAuthor = tagPostAuthor;
+						if (companyUrn) body.companyUrn = companyUrn;
 
 						responseData = await this.helpers.httpRequest.call(
 							this,
@@ -811,9 +964,32 @@ export class ConnectSafelyLinkedIn implements INodeType {
 						const searchStart = this.getNodeParameter('searchStart', itemIndex) as number;
 						const datePosted = this.getNodeParameter('datePosted', itemIndex) as string;
 						const sortBy = this.getNodeParameter('sortBy', itemIndex) as string;
+						const authorJobTitles = this.getNodeParameter('authorJobTitles', itemIndex) as string[] | string;
 
 						const body: any = { keywords, count: searchCount, start: searchStart, datePosted, sortBy };
 						if (accountId) body.accountId = accountId;
+						
+						// Handle authorJobTitles - when multipleValues is true, n8n returns an array
+						if (authorJobTitles) {
+							let jobTitlesArray: string[] = [];
+							
+							if (Array.isArray(authorJobTitles)) {
+								// Already an array from multipleValues
+								jobTitlesArray = authorJobTitles;
+							} else if (typeof authorJobTitles === 'string' && authorJobTitles.trim()) {
+								// Single string value
+								jobTitlesArray = [authorJobTitles];
+							}
+							
+							// Filter out empty strings and limit to 5
+							const cleanedJobTitles = jobTitlesArray
+								.filter((title: string) => title && typeof title === 'string' && title.trim().length > 0)
+								.slice(0, 5);
+							
+							if (cleanedJobTitles.length > 0) {
+								body.authorJobTitles = cleanedJobTitles;
+							}
+						}
 
 						responseData = await this.helpers.httpRequest.call(
 							this,
@@ -879,6 +1055,96 @@ export class ConnectSafelyLinkedIn implements INodeType {
 							{
 								method: 'POST',
 								url: 'https://api.connectsafely.ai/linkedin/profile',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								body,
+								json: true,
+							},
+						);
+						break;
+					}
+
+					// LinkedIn Organizations Operations
+					case 'getOrganizations': {
+						let url = 'https://api.connectsafely.ai/linkedin/organizations';
+						if (accountId) {
+							url += `?accountId=${accountId}`;
+						}
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'GET',
+								url,
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								json: true,
+							},
+						);
+						break;
+					}
+
+					// LinkedIn Groups Operations
+					case 'getGroupMembers': {
+						const groupId = this.getNodeParameter('groupId', itemIndex) as string;
+						const groupCount = this.getNodeParameter('groupCount', itemIndex) as number;
+						const groupStart = this.getNodeParameter('groupStart', itemIndex) as number;
+						const membershipStatuses = this.getNodeParameter('membershipStatuses', itemIndex) as string[];
+						const typeaheadQuery = this.getNodeParameter('typeaheadQuery', itemIndex) as string;
+
+						const body: any = { 
+							groupId,
+							count: groupCount,
+							start: groupStart,
+							membershipStatuses: membershipStatuses.length > 0 ? membershipStatuses : ['OWNER', 'MANAGER', 'MEMBER'],
+						};
+						if (accountId) body.accountId = accountId;
+						if (typeaheadQuery) body.typeaheadQuery = typeaheadQuery;
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'POST',
+								url: 'https://api.connectsafely.ai/linkedin/groups/members',
+								headers: {
+									'Authorization': `Bearer ${apiKey}`,
+									'Content-Type': 'application/json',
+									'Accept': 'application/json',
+								},
+								body,
+								json: true,
+							},
+						);
+						break;
+					}
+
+					case 'getGroupMembersByUrl': {
+						const groupUrl = this.getNodeParameter('groupUrl', itemIndex) as string;
+						const groupCount = this.getNodeParameter('groupCount', itemIndex) as number;
+						const groupStart = this.getNodeParameter('groupStart', itemIndex) as number;
+						const membershipStatuses = this.getNodeParameter('membershipStatuses', itemIndex) as string[];
+						const typeaheadQuery = this.getNodeParameter('typeaheadQuery', itemIndex) as string;
+
+						const body: any = { 
+							groupUrl,
+							count: groupCount,
+							start: groupStart,
+							membershipStatuses: membershipStatuses.length > 0 ? membershipStatuses : ['OWNER', 'MANAGER', 'MEMBER'],
+						};
+						if (accountId) body.accountId = accountId;
+						if (typeaheadQuery) body.typeaheadQuery = typeaheadQuery;
+
+						responseData = await this.helpers.httpRequest.call(
+							this,
+							{
+								method: 'POST',
+								url: 'https://api.connectsafely.ai/linkedin/groups/members-by-url',
 								headers: {
 									'Authorization': `Bearer ${apiKey}`,
 									'Content-Type': 'application/json',
