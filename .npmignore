@@ -1,2 +1,7 @@
 .DS_Store
 *.tsbuildinfo
+README_TEMPLATE.md
+*example*
+*template*
+*.example
+*.template
