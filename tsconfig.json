@@ -19,13 +19,17 @@
 		"declaration": true,
 		"sourceMap": true,
 		"skipLibCheck": true,
+		"rootDir": "./",
 		"outDir": "./dist/",
 		"tsBuildInfoFile": "./tsconfig.tsbuildinfo",
 	},
 	"include": [
-		"credentials/**/*",
-		"nodes/**/*",
-		"nodes/**/*.json",
+		"credentials/**/*.ts",
+		"nodes/**/*.ts",
 		"package.json",
 	],
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
 }

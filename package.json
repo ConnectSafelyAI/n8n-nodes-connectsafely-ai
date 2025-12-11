@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-connectsafely-ai",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "n8n community node for ConnectSafely LinkedIn automation platform - follow users, send messages, manage posts, and fetch profiles",
   "keywords": [
     "n8n-community-node-package"
@@ -20,7 +20,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "npx rimraf dist && tsc && gulp build:icons",
+    "build": "npx rimraf dist tsconfig.tsbuildinfo && tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
     "lint": "eslint nodes credentials package.json",
@@ -33,8 +33,7 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ConnectSafelyApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
+      "dist/credentials/ConnectSafelyApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/ConnectSafelyLinkedIn/ConnectSafelyLinkedIn.node.js"
